@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!-- 
+  DOCTYPE html: Essa linha diz ao navegador que este é um documento HTML5.
+  Deve ser sempre a PRIMEIRA linha de qualquer página HTML!
+-->
+
+<html lang="pt-BR">
+<!--
+  <html>: É a TAG RAIZ. Todo o conteúdo da página fica dentro dela.
+  lang="pt-BR": O atributo "lang" informa o idioma da página.
+  Atributos ficam DENTRO da tag de abertura, no formato: nome="valor"
+-->
+
+<head>
+  <!--
+    <head>: Área de CONFIGURAÇÕES da página.
+    O conteúdo aqui NÃO aparece na tela, mas é importante para o navegador.
+  -->
+
+  <meta charset="UTF-8">
+  <!-- 
+    <meta charset>: Define que a página usa UTF-8.
+    Isso garante que acentos e caracteres especiais (ã, é, ç) apareçam corretamente.
+  -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+    viewport: Faz a página se adaptar a celulares e tablets.
+    Sem isso, em celulares a página pode aparecer muito pequena!
+  -->
+
+  <title>Minha Primeira Página HTML</title>
+  <!--
+    <title>: Define o texto que aparece na ABA do navegador.
+    Experimente trocar o texto e veja o nome da aba mudar!
+  -->
+
+  <link rel="stylesheet" href="style.css">
+  <!--
+    <link>: Conecta este HTML ao arquivo de estilos CSS.
+    href="style.css": caminho do arquivo CSS (deve estar na mesma pasta).
+    rel="stylesheet": diz que o arquivo vinculado é uma folha de estilos.
+  -->
+
+</head>
+
+<body>
+  <!--
+    <body>: Tudo que aparece na TELA fica aqui dentro.
+    É o "corpo" da página!
+  -->
+
+  <!-- ============================================================
+    SEÇÃO: CABEÇALHO (HEADER)
+    O <header> geralmente contém o logo e o menu de navegação.
+  ============================================================ -->
+  <header class="cabecalho">
+    <!--
+      class="cabecalho": O atributo CLASS é uma etiqueta que você coloca
+      em um elemento para poder estilizá-lo no CSS.
+      No arquivo style.css, você vai encontrar ".cabecalho { ... }"
+    -->
+
+    <div class="logo">
+      <!--
+        <div>: É uma CAIXA genérica, usada para agrupar elementos.
+        Por si só não tem visual, mas serve para organizar e estilizar com CSS.
+      -->
+      🌐 MeuSite
+    </div>
+
+    <nav class="menu">
+      <!--
+        <nav>: Tag semântica para NAVEGAÇÃO.
+        "Semântico" significa que a tag descreve o que o conteúdo é,
+        não apenas como ele parece.
+      -->
+      <a href="#sobre">Sobre</a>
+      <a href="#conteudo">Conteúdo</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#contato">Contato</a>
+      <!--
+        <a href="">: Tag de LINK (âncora).
+        href="#sobre": o "#" significa que vai rolar para um ID na mesma página.
+        Experimente trocar por href="https://google.com" para ir a outro site!
+      -->
+    </nav>
+  </header>
+
+
+  <!-- ============================================================
+    SEÇÃO: BANNER PRINCIPAL (HERO)
+    Uma seção de destaque no topo da página.
+  ============================================================ -->
+  <section class="hero" id="inicio">
+    <!--
+      <section>: Agrupa um BLOCO DE CONTEÚDO com tema próprio.
+      id="inicio": O ID é um identificador ÚNICO. Só pode existir um por página.
+      Diferente do class (que pode repetir), o id identifica um elemento específico.
+    -->
+
+    <div class="hero-texto">
+      <h1>Blog Aura Demais</h1>
+      <!--
+        <h1> até <h6>: Tags de TÍTULO (heading).
+        h1 = título mais importante (use apenas 1 por página)
+        h2 = subtítulo
+        h3, h4, h5, h6 = títulos menores
+        O tamanho diminui do h1 ao h6.
+      -->
+
+    
+      <!--
+        <p>: Define um PARÁGRAFO de texto.
+        <strong>: Deixa o texto em NEGRITO e indica importância.
+        Experimente trocar por <em> para deixar em itálico!
+      -->
+
+      <p>
+  
+
+      </p>
+
+      <a href="https://www.tiktok.com/@sameme/video/7619458881781091605" class="botao">Assista</a>
+      <!--
+        Um link com class="botao" vai receber visual de botão via CSS.
+        O visual não vem do HTML, mas do CSS!
+      -->
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    SEÇÃO: SOBRE
+  ============================================================ -->
+  <section class="secao" id="sobre">
+
+    
+
+    
+     
+    <div class="cards">
+      <!--
+        Vamos criar 3 "cards" lado a lado usando CSS Flexbox.
+        Veja no CSS como ".cards" é estilizado!
+      -->
+
+      <div class="card">
+        <span class="icone">🔥</span>
+        <h3>como farmar aura?</h3>
+        <p>Fale muito 67, ande devagar para exalar aura, use roupas chamativas e assista esenho. 🔥</p>
+        <!--
+          <span>: Igual ao <div>, mas é INLINE (fica na mesma linha do texto).
+          <div> é BLOCK (ocupa uma linha inteira).
+        -->
+      </div>
+
+      <div class="card">
+        <span class="icone">🤖</span>
+        <h3>Como saber se tenho aura?</h3>
+        <p>Ande com pessoas que você sabe que possui muita aura.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+      <figure>
+        <!--
+          <figure>: Agrupa uma imagem com sua legenda.
+          <figcaption>: Legenda da imagem dentro do <figure>.
+        -->
+        <img src="download.jpg" alt="Imagem de exemplo 1" width="300" height="200">
+        <figcaption>AURA + EGO= Aura lá no topo, ego calibrado — ele sabe o peso que tem quando entra em cena.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="FEIJAO.jpg" alt="Imagem de exemplo 2" width="300" height="200">
+        <figcaption>FEIJÃO COM FARINHA= Feijão com farinha, meu parceiro… isso aqui é elite, é o verdadeiro luxo brasileiro.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="querido.jpg" alt="Imagem de exemplo 3" width="300" height="200">
+         <figcaption>QUERIDÃO AURA= O queridão chega e o ambiente muda, como se até o tempo respeitasse sua presença.
+      
+
+    </div>
+  </section>
+
+<figure>
+  <img src="losti.webp" alt="imagem de exemplo 4" width="300" height="200">
+    </figcaption>CHRIS LOST MEDIA=O cara tem muita aura!
