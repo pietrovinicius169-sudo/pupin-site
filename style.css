@@ -1,0 +1,862 @@
+/* ================================================================
+   ARQUIVO: style.css
+   Este arquivo controla TODA a aparência visual do index.html.
+
+   Como o CSS funciona:
+   seletor { propriedade: valor; }
+
+   SELETORES mais usados:
+   p         → seleciona todas as tags <p>
+   .classe   → seleciona elementos com class="classe"
+   #id       → seleciona o elemento com id="id"
+   h1, h2    → seleciona h1 E h2 ao mesmo tempo
+   .pai .filho → seleciona .filho que está dentro de .pai
+================================================================ */
+
+
+/* ----------------------------------------------------------------
+   VARIÁVEIS CSS (Custom Properties)
+   Defina cores e valores uma vez e reutilize em todo o arquivo!
+   Para mudar a cor principal do site, basta alterar aqui.
+---------------------------------------------------------------- */
+:root {
+  /* :root seleciona o elemento raiz do documento (o <html>) */
+  /* Variáveis são declaradas com -- na frente do nome */
+
+  --cor-primaria: #000000;     /* Azul principal */
+  --cor-secundaria: #1e40af;   /* Azul mais escuro (hover, destaques) */
+  --cor-acento: #f59e0b;       /* Amarelo/laranja para destaques */
+  --cor-texto: #1f2937;        /* Cinza escuro para textos */
+  --cor-texto-claro: #6b7280;  /* Cinza médio para textos secundários */
+  --cor-fundo: #f9fafb;        /* Fundo quase branco */
+  --cor-fundo-escuro: #111827; /* Fundo escuro para seções alternadas */
+  --cor-branco: #ffffff;
+  --cor-borda: #e5e7eb;
+
+  --fonte-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /*
+    font-family: lista de fontes em ordem de preferência.
+    O navegador tenta a primeira. Se não encontrar, tenta a próxima.
+    Sempre termine com uma família genérica: serif, sans-serif, monospace.
+  */
+
+  --raio-borda: 8px;    /* Arredondamento dos cantos (border-radius) */
+  --sombra: 0 4px 6px rgba(0, 0, 0, 0.07);
+  /*
+    box-shadow: deslocamento-x deslocamento-y desfoque cor
+    rgba(0, 0, 0, 0.07) = preto com 7% de opacidade
+  */
+}
+
+
+/* ----------------------------------------------------------------
+   RESET BÁSICO
+   Navegadores têm estilos padrão. O reset remove diferenças entre eles.
+---------------------------------------------------------------- */
+* {
+  /*
+    * = seletor universal. Seleciona TODOS os elementos da página.
+    Use com cuidado! Aqui é útil para resetar o box-model.
+  */
+  margin: 0;
+  /*
+    margin: Espaço EXTERNO ao elemento (fora da borda).
+    margin: 0 → remove a margem padrão dos navegadores.
+    Você pode definir individualmente:
+    margin-top / margin-right / margin-bottom / margin-left
+    Ou abreviado: margin: cima direita baixo esquerda (sentido horário)
+  */
+  padding: 0;
+  /*
+    padding: Espaço INTERNO ao elemento (entre conteúdo e borda).
+    Funciona igual ao margin: cima direita baixo esquerda.
+  */
+  box-sizing: border-box;
+  /*
+    box-sizing: border-box faz com que padding e border
+    sejam incluídos na largura total do elemento.
+    Sem isso, um elemento com width:200px + padding:20px ficaria com 240px!
+    Com border-box: continua 200px, o padding "entra" para dentro.
+  */
+}
+
+
+/* ----------------------------------------------------------------
+   ESTILOS GLOBAIS (base de toda a página)
+---------------------------------------------------------------- */
+body {
+  font-family: var(--fonte-principal);
+  /*
+    var(--nome-variavel): usa o valor da variável CSS definida em :root.
+    Ao trocar --fonte-principal lá em cima, todos os textos mudam!
+  */
+
+  font-size: 16px;
+  /*
+    font-size: tamanho da fonte.
+    Unidades:
+    px → pixels (fixo)
+    em → relativo ao elemento pai (2em = 2x o tamanho do pai)
+    rem → relativo ao <html> (2rem = 2x o tamanho base, mais previsível)
+    % → porcentagem do elemento pai
+    vw/vh → % da largura/altura da janela (viewport)
+  */
+
+  line-height: 1.6;
+  /*
+    line-height: Altura da linha (espaço entre linhas do texto).
+    Sem unidade (1.6) = 1.6x o tamanho da fonte atual.
+    Recomendado entre 1.4 e 1.8 para boa leitura.
+  */
+
+  color: var(--cor-texto);
+  /* color: cor do TEXTO */
+
+  background-color: var(--cor-fundo);
+  /* background-color: cor de fundo */
+}
+
+h1, h2, h3, h4 {
+  /*
+    Seletor múltiplo: aplica os mesmos estilos a várias tags de uma vez.
+    Separe por vírgula.
+  */
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  /*
+    margin-bottom: margem apenas na parte de baixo.
+    1rem = 16px (baseado no tamanho de fonte do <html>)
+  */
+  color: var(--cor-texto);
+}
+
+h1 { font-size: 2.5rem; }  /* 40px */
+h2 { font-size: 2rem; }    /* 32px */
+h3 { font-size: 1.3rem; }  /* ~21px */
+
+p {
+  margin-bottom: 1rem;
+  color: var(--cor-texto-claro);
+}
+
+a {
+  /* Estiliza todos os links da página */
+  color: var(--cor-primaria);
+  text-decoration: none;
+  /*
+    text-decoration: none → remove o sublinhado padrão dos links.
+    Outros valores: underline | overline | line-through
+  */
+  transition: color 0.3s ease;
+  /*
+    transition: cria uma ANIMAÇÃO suave quando a propriedade muda.
+    Formato: propriedade duração tipo-de-curva
+    ease = começa devagar, acelera, termina devagar
+    linear = velocidade constante
+    ease-in-out = suave nas duas pontas
+  */
+}
+
+a:hover {
+  /*
+    :hover é uma PSEUDO-CLASSE. Aplica estilos quando o mouse está sobre o elemento.
+    Outras pseudo-classes:
+    :focus → quando o elemento está focado (selecionado com tab)
+    :active → no exato momento do clique
+    :visited → links já visitados
+    :first-child → primeiro filho de um elemento
+    :nth-child(2) → o segundo filho
+  */
+  color: var(--cor-secundaria);
+  text-decoration: underline;
+}
+
+code {
+  font-family: 'Courier New', Courier, monospace;
+  /* monospace = fonte de largura fixa, ideal para código */
+  background-color: #e5e7eb;
+  padding: 2px 6px;
+  /*
+    padding com 2 valores: cima/baixo = 2px, esquerda/direita = 6px
+    Com 4 valores seria: cima direita baixo esquerda
+  */
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+img {
+  max-width: 100%;
+  /*
+    max-width: 100% → a imagem nunca ultrapassa a largura do pai.
+    Isso evita que imagens grandes "quebrem" o layout.
+  */
+  display: block;
+  /*
+    display: block faz a imagem ocupar sua própria linha.
+    Por padrão, <img> é inline (fica na linha do texto).
+  */
+  border-radius: var(--raio-borda);
+}
+
+
+/* ----------------------------------------------------------------
+   CABEÇALHO
+---------------------------------------------------------------- */
+.cabecalho {
+  /*
+    .cabecalho → seleciona elementos com class="cabecalho"
+  */
+  display: flex;
+  /*
+    display: flex → ativa o FLEXBOX.
+    Flexbox organiza os filhos em linha (por padrão).
+    É um dos sistemas de layout mais poderosos do CSS!
+  */
+  justify-content: space-between;
+  /*
+    justify-content: distribui os filhos no eixo PRINCIPAL (horizontal).
+    space-between → um no começo, outro no fim (máximo de espaço entre eles)
+    center → centraliza todos
+    flex-start → alinha à esquerda (padrão)
+    flex-end → alinha à direita
+    space-around → espaço igual ao redor de cada filho
+  */
+  align-items: center;
+  /*
+    align-items: alinha os filhos no eixo CRUZADO (vertical).
+    center → centraliza verticalmente
+    flex-start → alinha no topo
+    flex-end → alinha na base
+    stretch → estica para preencher (padrão)
+  */
+  padding: 1rem 2rem;
+  /*
+    padding: 1rem 2rem → cima/baixo = 1rem, esquerda/direita = 2rem
+  */
+  background-color: var(--cor-branco);
+  box-shadow: var(--sombra);
+  position: sticky;
+  /*
+    position: sticky → o elemento "gruda" na tela ao fazer scroll.
+    Precisa de top, left, right ou bottom para funcionar.
+    Outros valores:
+    static → padrão, flui com o documento
+    relative → movido em relação à sua posição original
+    absolute → posicionado em relação ao pai (que deve ter position:relative)
+    fixed → fixo na janela (não mexe com scroll)
+  */
+  top: 0;
+  z-index: 100;
+  /*
+    z-index: controla qual elemento fica "na frente" quando sobrepõem.
+    Números maiores ficam na frente. Só funciona com position ≠ static.
+  */
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  /*
+    font-weight: espessura da fonte.
+    400 = normal | 700 = negrito | 100-900 = escala
+    Também aceita: bold, normal, lighter, bolder
+  */
+  color: var(--cor-primaria);
+  letter-spacing: -0.5px;
+  /*
+    letter-spacing: espaço entre as letras.
+    Negativo = letras mais próximas.
+    Positivo = letras mais espaçadas.
+  */
+}
+
+.menu {
+  display: flex;
+  gap: 2rem;
+  /*
+    gap: espaço entre os filhos no flexbox (ou grid).
+    Muito mais prático que usar margin em cada filho!
+  */
+}
+
+.menu a {
+  /*
+    .menu a → seleciona <a> que está DENTRO de .menu.
+    Seletor descendente: pai depois filho, separados por espaço.
+  */
+  font-weight: 500;
+  color: var(--cor-texto);
+  font-size: 0.95rem;
+}
+
+.menu a:hover {
+  color: var(--cor-primaria);
+}
+
+
+/* ----------------------------------------------------------------
+   HERO (banner principal)
+---------------------------------------------------------------- */
+.hero {
+  min-height: 80vh;
+  /*
+    min-height: altura mínima do elemento.
+    80vh = 80% da altura da janela do navegador.
+  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+  /*
+    background: linear-gradient() → gradiente linear.
+    135deg = ângulo da direção
+    Pode colocar múltiplas cores: linear-gradient(to right, #ff0, #f00)
+  */
+  text-align: center;
+  /*
+    text-align: alinhamento do texto.
+    center | left | right | justify
+  */
+  padding: 4rem 2rem;
+}
+
+.hero-texto {
+  max-width: 700px;
+  /*
+    max-width: largura máxima. Mesmo que a janela seja maior, o elemento
+    não passa desse valor. Ótimo para não deixar textos muito largos!
+  */
+}
+
+.hero h1 {
+  /*
+    .hero h1 → seleciona h1 que está dentro de .hero (seletor descendente)
+  */
+  color: var(--cor-branco);
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  /*
+    text-shadow: sombra no texto.
+    Formato: deslocamento-x deslocamento-y desfoque cor
+  */
+}
+
+.hero p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+
+/* ----------------------------------------------------------------
+   BOTÃO
+---------------------------------------------------------------- */
+.botao {
+  display: inline-block;
+  /*
+    inline-block: o elemento fica na linha (inline) mas aceita
+    width, height, padding, margin como se fosse block.
+  */
+  background-color: var(--cor-acento);
+  color: var(--cor-texto);
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  /* border-radius: 50px em botões cria o efeito "pílula" */
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  /*
+    transition: all → anima TODAS as propriedades que mudarem.
+    Mais específico seria: transition: background-color 0.3s ease;
+  */
+  cursor: pointer;
+  /*
+    cursor: pointer → mostra a mãozinha 👆 ao passar o mouse.
+    Outros valores: default | text | crosshair | not-allowed | grab
+  */
+  border: none;
+  /*
+    border: none → remove a borda padrão dos botões.
+    border: largura estilo cor → ex: border: 2px solid red
+  */
+}
+
+.botao:hover {
+  background-color: #d97706; /* Amarelo mais escuro */
+  transform: translateY(-2px);
+  /*
+    transform: aplica transformações visuais sem afetar o layout.
+    translateY(-2px) → sobe 2px
+    translateX(10px) → move 10px para direita
+    scale(1.1) → aumenta 10%
+    rotate(45deg) → rotaciona 45 graus
+  */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+
+/* ----------------------------------------------------------------
+   SEÇÕES
+---------------------------------------------------------------- */
+.secao {
+  padding: 4rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  /*
+    margin: 0 auto → centraliza o elemento horizontalmente na página.
+    O 0 é para cima/baixo, e "auto" distribui igualmente nas laterais.
+    Só funciona se o elemento tiver uma largura definida (width ou max-width)!
+  */
+}
+
+.secao-escura {
+  /*
+    Essa classe É USADA JUNTO COM .secao (class="secao secao-escura").
+    Ela só muda o fundo e a cor do texto, o restante herda de .secao.
+  */
+  background-color: var(--cor-fundo-escuro);
+  max-width: 100%;
+  /* Aqui sobrescrevemos o max-width para o fundo escuro cobrir tudo */
+}
+
+.secao-escura > * {
+  /*
+    > * → seleciona apenas filhos DIRETOS.
+    É diferente do espaço: .secao-escura * = TODOS os descendentes.
+    .secao-escura > * = apenas filhos imediatos.
+  */
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.secao-escura h2,
+.secao-escura h3 {
+  color: var(--cor-branco);
+}
+
+.secao-escura p,
+.secao-escura li {
+  color: #9ca3af;
+}
+
+.secao-escura code {
+  background-color: #374151;
+  color: #f9fafb;
+}
+
+
+/* ----------------------------------------------------------------
+   CAIXA DE DICA
+---------------------------------------------------------------- */
+.caixa-dica {
+  background-color: #fef3c7; /* Amarelo claro */
+  border-left: 4px solid var(--cor-acento);
+  /*
+    border-left: borda apenas na lateral esquerda.
+    Outros: border-top | border-right | border-bottom
+    Abreviado: border (aplica em todos os lados)
+    Formato: espessura estilo cor
+    Estilos: solid | dashed | dotted | double | none
+  */
+  padding: 1rem 1.5rem;
+  border-radius: 0 var(--raio-borda) var(--raio-borda) 0;
+  /*
+    border-radius com 4 valores: top-left top-right bottom-right bottom-left
+    0 = canto reto | 8px = arredondado | 50% = circulo (em quadrados)
+  */
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  color: #92400e; /* Marrom escuro para contraste */
+}
+
+.secao-escura .caixa-dica {
+  background-color: #1f2937;
+  color: #fbbf24;
+  border-left-color: #fbbf24;
+}
+
+
+/* ----------------------------------------------------------------
+   CARDS (FLEXBOX)
+---------------------------------------------------------------- */
+.cards {
+  display: flex;
+  /*
+    Flexbox em ação! Os 3 .card filhos vão se organizar em linha.
+  */
+  gap: 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  /*
+    flex-wrap: wrap → se não couber na linha, quebra para a próxima.
+    nowrap (padrão) → todos ficam na mesma linha (podem encolher muito!)
+  */
+}
+
+.card {
+  flex: 1;
+  /*
+    flex: 1 → o card cresce para preencher o espaço disponível igualmente.
+    flex é abreviação de: flex-grow flex-shrink flex-basis
+    flex: 1 = flex: 1 1 0 (cresce, encolhe, base 0)
+  */
+  min-width: 200px;
+  /* min-width: garante que o card não fique menor que 200px */
+  background-color: var(--cor-branco);
+  padding: 2rem;
+  border-radius: var(--raio-borda);
+  box-shadow: var(--sombra);
+  text-align: center;
+  border: 1px solid var(--cor-borda);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.icone {
+  font-size: 2.5rem;
+  display: block;
+  /* display: block faz o <span> ocupar sua própria linha */
+  margin-bottom: 1rem;
+}
+
+
+/* ----------------------------------------------------------------
+   TABELA
+---------------------------------------------------------------- */
+.tabela-wrapper {
+  overflow-x: auto;
+  /*
+    overflow-x: auto → se a tabela for mais larga que o container,
+    aparece uma barra de rolagem horizontal.
+    overflow: hidden → esconde o conteúdo que passa dos limites.
+    overflow: visible (padrão) → o conteúdo vai além dos limites.
+    overflow: scroll → sempre mostra a barra de rolagem.
+  */
+  margin: 2rem 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  /*
+    border-collapse: collapse → une as bordas das células adjacentes.
+    Sem isso, cada célula teria sua própria borda dupla.
+  */
+  background-color: var(--cor-branco);
+  border-radius: var(--raio-borda);
+  overflow: hidden;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+th {
+  background-color: var(--cor-primaria);
+  color: var(--cor-branco);
+  font-weight: 600;
+}
+
+tr:last-child td {
+  /*
+    tr:last-child → a última linha da tabela.
+    Dentro dela, seleciona as células <td>.
+    Removemos a borda de baixo da última linha para ficar mais limpo.
+  */
+  border-bottom: none;
+}
+
+tr:hover td {
+  background-color: #f0f4ff;
+  /* Destaca a linha ao passar o mouse */
+}
+
+
+/* ----------------------------------------------------------------
+   DUAS COLUNAS (FLEXBOX)
+---------------------------------------------------------------- */
+.duas-colunas {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.duas-colunas > div {
+  flex: 1;
+  min-width: 200px;
+}
+
+ul, ol {
+  padding-left: 1.5rem;
+  /* padding-left: indenta a lista em relação à margem */
+}
+
+li {
+  padding: 0.3rem 0;
+}
+
+
+/* ----------------------------------------------------------------
+   GALERIA (CSS GRID)
+---------------------------------------------------------------- */
+.galeria {
+  display: grid;
+  /*
+    display: grid → ativa o CSS Grid.
+    Enquanto Flexbox organiza em 1 dimensão (linha OU coluna),
+    o Grid organiza em 2 dimensões (linhas E colunas).
+  */
+  grid-template-columns: repeat(3, 1fr);
+  /*
+    grid-template-columns: define as colunas.
+    repeat(3, 1fr) = 3 colunas de tamanho igual (1 fração cada).
+    1fr = 1 parte do espaço disponível.
+    Outros exemplos:
+    repeat(2, 1fr) → 2 colunas iguais
+    200px 1fr 200px → coluna fixa, flexível, fixa
+    repeat(auto-fit, minmax(250px, 1fr)) → responsivo automático!
+  */
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+figure {
+  margin: 0;
+  text-align: center;
+}
+
+figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--cor-texto-claro);
+  font-style: italic;
+  /* font-style: italic → texto em itálico */
+}
+
+
+/* ----------------------------------------------------------------
+   FORMULÁRIO
+---------------------------------------------------------------- */
+.formulario {
+  max-width: 600px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  /*
+    flex-direction: column → os filhos se organizam em COLUNA (vertical).
+    row (padrão) → organiza em linha (horizontal).
+    row-reverse → linha invertida.
+    column-reverse → coluna invertida.
+  */
+  gap: 1.2rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--cor-branco);
+}
+
+input,
+select,
+textarea {
+  /* Estiliza todos os campos de formulário de uma vez */
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #374151;
+  border-radius: var(--raio-borda);
+  font-size: 1rem;
+  font-family: var(--fonte-principal);
+  /*
+    font-family em inputs: por padrão, inputs não herdam a fonte do body.
+    É necessário declarar explicitamente!
+  */
+  background-color: #1f2937;
+  color: var(--cor-branco);
+  transition: border-color 0.3s ease;
+  outline: none;
+  /*
+    outline: none → remove o contorno azul padrão ao focar no campo.
+    Cuidado com acessibilidade! Sempre deixe algum indicador visual de foco.
+  */
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  /*
+    :focus → aplica estilo quando o campo está ativo/selecionado.
+    Essencial para acessibilidade! Deixa claro onde o usuário está.
+  */
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+textarea {
+  resize: vertical;
+  /*
+    resize: controla se o usuário pode redimensionar o textarea.
+    vertical → só pode redimensionar verticalmente.
+    horizontal → só horizontalmente.
+    both → em ambas as direções.
+    none → não pode redimensionar.
+  */
+}
+
+
+/* ----------------------------------------------------------------
+   RODAPÉ
+---------------------------------------------------------------- */
+.rodape {
+  background-color: var(--cor-texto);
+  color: #9ca3af;
+  text-align: center;
+  padding: 2rem;
+}
+
+.rodape p {
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.rodape a {
+  color: var(--cor-acento);
+}
+
+.rodape a:hover {
+  color: var(--cor-branco);
+}
+
+
+/* ================================================================
+   RESPONSIVIDADE com MEDIA QUERIES
+   
+   Media queries adaptam o layout para diferentes tamanhos de tela.
+   
+   @media (max-width: 768px) → aplica quando a janela tem ATÉ 768px.
+   @media (min-width: 1200px) → aplica quando tiver AO MENOS 1200px.
+   @media (min-width: 600px) and (max-width: 900px) → intervalo.
+   
+   Breakpoints comuns (tamanhos de referência):
+   480px → celulares pequenos
+   768px → tablets / celulares grandes
+   1024px → laptops
+   1280px → desktops
+================================================================ */
+
+@media (max-width: 768px) {
+  /* 
+    Tudo dentro deste bloco só vale em telas com até 768px de largura.
+    Aqui adaptamos o layout para celulares!
+  */
+
+  .cabecalho {
+    flex-direction: column;
+    /* Empilha logo e menu em coluna no celular */
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .menu {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    /* Reduz o tamanho do título no celular */
+  }
+
+  .cards {
+    flex-direction: column;
+    /* Empilha os cards em coluna no celular */
+  }
+
+  .galeria {
+    grid-template-columns: 1fr;
+    /* Uma coluna só no celular */
+  }
+
+  .duas-colunas {
+    flex-direction: column;
+  }
+
+  .secao {
+    padding: 2rem 1rem;
+    /* Menos padding lateral no celular */
+  }
+}
+
+/* ================================================================
+   RESUMO RÁPIDO DAS PROPRIEDADES MAIS USADAS:
+
+   TEXTO:
+   color           → cor do texto
+   font-size       → tamanho
+   font-weight     → espessura (400=normal, 700=bold)
+   font-family     → família da fonte
+   text-align      → alinhamento (left, center, right, justify)
+   line-height     → espaço entre linhas
+   letter-spacing  → espaço entre letras
+   text-decoration → sublinhado, riscado, etc.
+   text-transform  → uppercase, lowercase, capitalize
+
+   CAIXA (BOX MODEL):
+   width / height        → largura e altura
+   max-width / min-width → limites
+   padding               → espaço interno
+   margin                → espaço externo
+   border                → borda (largura estilo cor)
+   border-radius         → arredondamento dos cantos
+   box-shadow            → sombra
+
+   FUNDO:
+   background-color      → cor de fundo
+   background-image      → imagem de fundo
+   background-size       → cover | contain | auto
+   background-position   → center | top left | etc.
+
+   LAYOUT:
+   display         → block | inline | inline-block | flex | grid | none
+   position        → static | relative | absolute | fixed | sticky
+   top/right/bottom/left → posição (com position ≠ static)
+   z-index         → camada (frente/atrás)
+   overflow        → hidden | auto | scroll | visible
+
+   FLEXBOX:
+   flex-direction  → row | column
+   justify-content → flex-start | center | flex-end | space-between...
+   align-items     → flex-start | center | flex-end | stretch...
+   flex-wrap       → wrap | nowrap
+   gap             → espaço entre filhos
+   flex            → como o filho cresce/encolhe
+
+   GRID:
+   grid-template-columns → define as colunas
+   grid-template-rows    → define as linhas
+   gap                   → espaço entre células
+   
+   OUTROS:
+   opacity         → transparência (0 a 1)
+   cursor          → aparência do cursor
+   transition      → animação suave de propriedades
+   transform       → translate, scale, rotate
+   visibility      → visible | hidden (esconde mas mantém espaço)
+================================================================ */
